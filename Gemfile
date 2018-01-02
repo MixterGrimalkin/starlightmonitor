@@ -20,6 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 # Install aws-sdk gem:
 gem 'aws-sdk', '~> 2'
+gem 'mqtt', :git => 'https://github.com/njh/ruby-mqtt.git'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
