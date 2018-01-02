@@ -2,7 +2,7 @@ class ObservatoryController < ApplicationController
 
   def index
 
-    @message = 'Welcome to the StarlightMonitor'
+    @constellations = Constellation.all
 
   end
 
