@@ -1,7 +1,44 @@
+<style>
+  body {
+    background-image: url('background.png');
+    color: white;
+    font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana", sans-serif;
+    padding: 10px;
+  }
+
+  .constellation {
+    background: rgb(0,0,90);
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 0 20px 15px 20px;
+    border-radius: 10px;
+    border: 1px solid white;
+  }
+
+  .star {
+    color: rgb(70,70,70);
+    float: left;
+    border: 1px solid rgb(70,70,70);
+    width: 20px;
+    text-align: center;
+    padding: 5px;
+  }
+</style>
+
+<body>
+
+
 <h1>Starlight Observatory</h1>
 
 <% @constellations.each do |c| %>
-    <div>
+    <div class="constellation">
       <h3><%= c.name %></h3>
+      <% i = 1 %>
+      <% c.star_count.times do %>
+          <div class="star"><%= i %></div>
+          <% i += 1 %>
+      <% end %>
     </div>
 <% end %>
+</body>
