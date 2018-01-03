@@ -16,15 +16,16 @@
     border: 1px solid white;
     margin-right: 10px;
     box-shadow: 0 0 20px black;
+    width: 200px;
   }
 
   .star {
     float: left;
-    width: 20px;
     text-align: center;
     padding: 5px;
     border-radius: 4px;
     margin: 1px;
+    min-width: 10px;
   }
 
   .inactive {
@@ -40,18 +41,41 @@
 
 </style>
 
+<script>
+  $(function () {
+    setInterval(function () {
+      $.ajax({
+        url: "/current_state",
+        success: function (data) {
+          for (var i in data) {
+            var cons = data[i];
+            for (var j in cons.components) {
+              var comp = cons.components[j];
+              if (comp.current_state) {
+                $("#" + cons.name + "-" + comp.name).removeClass("inactive").addClass("active");
+              } else {
+                $("#" + cons.name + "-" + comp.name).removeClass("active").addClass("inactive");
+
+              }
+            }
+          }
+        }
+      });
+    }, 500);
+  });
+</script>
+
 <body>
 
 <h1>Starlight Observatory</h1>
 
-<% @constellations.each do |c| %>
-    <div class="constellation">
-      <h3><%= c.name %></h3>
-      <% i = 1 %>
-      <% c.star_count.times do %>
-          <div class="star <%= i%2==0 ? "in" : "" %>active"><%= i %></div>
-          <% i += 1 %>
+<% @constellations.each do |constellation| %>
+    <div id="<%= constellation.name %>" class="constellation">
+      <h3><%= constellation.description %></h3>
+      <% constellation.components.order(:created_at).each do |component| %>
+          <div id="<%= "#{constellation.name}-#{component.name}" %>" class="star <%= component.current_state ? '' : 'in' %>active"><%= component.description %></div>
       <% end %>
     </div>
 <% end %>
+
 </body>

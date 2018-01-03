@@ -1,4 +1,4 @@
 class Component < ApplicationRecord
   belongs_to :constellation
-  has_many :events
+  has_many :star_events
 end
