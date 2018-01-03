@@ -10,15 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102145547) do
+ActiveRecord::Schema.define(version: 20180103114438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "components", force: :cascade do |t|
+    t.text "name"
+    t.text "description"
+    t.text "type"
+    t.boolean "current_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "constellation_id"
+  end
 
   create_table "constellations", force: :cascade do |t|
     t.text "name"
     t.text "description"
     t.integer "star_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.boolean "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
