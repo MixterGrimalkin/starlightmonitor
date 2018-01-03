@@ -15,9 +15,9 @@ class EventsController < ApplicationController
           StarEvent.create({component: component, state: new_state, remote_ip: request.remote_ip})
           component.current_state = new_state
           component.save
-          constellation.last_online = DateTime.now
-          constellation.save
         end
+        constellation.last_online = DateTime.now
+        constellation.save
         render plain: "Event Recorded\n"
       else
         render plain: "Component '#{params[:comp_name]}' not found\n", status: 404
