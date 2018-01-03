@@ -1,0 +1,25 @@
+<h1><%= @constellation.try(:description) || '(no such constellation)' %></h1>
+
+<table border="0">
+
+  <% @events.each do |event| %>
+      <tr bgcolor="<%= event.state ? '#005500' : '#550000' %>">
+        <td><%= event.created_at.strftime('%d-%m-%Y') %></td>
+        <td><%= event.created_at.strftime('%H:%M:%S') %></td>
+        <td><%= "#{event.component.component_type}: #{event.component.description}" %></td>
+        <td><%= event.state ? 'ON' : 'OFF' %></td>
+      </tr>
+  <% end %>
+</table>
+
+<% if @constellation %>
+    <p>Last message received: <strong><%= @constellation.last_online %></strong></p>
+<% end %>
+
+<script>
+  $(function () {
+      setInterval(function() { location.reload() }, 1000);
+  })
+</script>
+
+

@@ -2,15 +2,22 @@ class EventsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
+  def view
+    @constellation = Constellation.where(name: params[:cons_name]).try(:first)
+    @events = @constellation ? @constellation.star_events.order(created_at: :desc).limit(ENV['LOG_LIMIT'].to_i) : []
+  end
+
   def register_event
     if constellation = Constellation.includes(:components).where(name: params[:cons_name]).try(:first)
       if component = constellation.components.select { |c| c.name==params[:comp_name] }.first
         new_state = (params[:state].downcase=='on')
-        StarEvent.create({component: component, state: new_state, remote_ip: request.remote_ip})
-        component.current_state = new_state
-        component.save
-        constellation.last_online = DateTime.now
-        constellation.save
+        unless new_state==component.current_state
+          StarEvent.create({component: component, state: new_state, remote_ip: request.remote_ip})
+          component.current_state = new_state
+          component.save
+          constellation.last_online = DateTime.now
+          constellation.save
+        end
         render plain: "Event Recorded\n"
       else
         render plain: "Component '#{params[:comp_name]}' not found\n", status: 404
