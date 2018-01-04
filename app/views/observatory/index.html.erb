@@ -1,7 +1,5 @@
 <style>
-  body {
-    background-image: url('background.png');
-  }
+  body { background-image: url('background.png'); }
 </style>
 
 <body>
@@ -10,7 +8,6 @@
 
 <% @constellations.each do |constellation| %>
     <a href="/events/<%= constellation.name %>">
-
       <div id="<%= constellation.name %>" class="constellation inactive">
         <h3><%= constellation.description %></h3>
         <% constellation.components.order(:created_at).each do |component| %>

@@ -1,13 +1,14 @@
 <h1><%= @constellation.try(:description) || '(no such constellation)' %></h1>
 
 <table border="0">
-
   <% @events.each do |event| %>
       <tr bgcolor="<%= event.state ? '#005500' : '#550000' %>">
         <td><%= event.created_at.strftime('%d-%m-%Y') %></td>
         <td><%= event.created_at.strftime('%H:%M:%S') %></td>
-        <td><%= "#{event.component.component_type}: #{event.component.description}" %></td>
+        <td><%= event.component.component_type %></td>
+        <td><%= event.component.description %></td>
         <td><%= event.state ? 'ON' : 'OFF' %></td>
+        <td><%= event.remote_ip %></td>
       </tr>
   <% end %>
 </table>

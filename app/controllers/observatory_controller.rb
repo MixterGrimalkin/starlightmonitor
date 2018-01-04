@@ -1,9 +1,7 @@
 class ObservatoryController < ApplicationController
 
   def index
-
     @constellations = Constellation.includes(:components).order(:created_at).all
-
   end
 
   def current_state
