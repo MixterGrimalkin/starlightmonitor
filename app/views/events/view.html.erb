@@ -19,7 +19,7 @@
 
 <script>
   $(function () {
-      setInterval(function() { location.reload() }, 1000);
+      setInterval(function() { location.reload() }, <%= ENV['LOG_REFRESH'] %>);
   })
 </script>
 
